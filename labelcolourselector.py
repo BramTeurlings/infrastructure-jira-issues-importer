@@ -9,6 +9,8 @@ class LabelColourSelector:
             return 'ee4035'
         elif label == 'epic':
             return 'ddf4dd'
+        elif label == 'task':
+            return '03fce3'
         # elif (label in self._project.get_components()): return 'fdf498'
         # elif (label.replace('component:', '') in self._project.get_components()): return 'fdf498'
         else:

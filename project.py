@@ -107,12 +107,23 @@ class Project:
         body = self._htmlentitydecode(item.description.text)
 
         # metadata: original author & link
+        
+        # desc = self._htmlentitydecode(item.description.text)
+        title = item.title.text[item.title.text.index("]") + 2:len(item.title.text)]
+        reporter = item.reporter.get('username')
+        assignee = item.assignee
+        assignee_user = item.assignee.get('username')
+        # desc = str(desc or '')
+        title = str(title or '')
+        reporter = str(reporter or '')
+        assignee = str(assignee or '')
+        assignee_user = str(assignee_user or '')
 
-        body = body + '\n\n---\n<details><summary><i>Originally reported by <a title="' + str(item.reporter) + '" href="' + self.jiraBaseUrl + '/secure/ViewProfile.jspa?name=' + item.reporter.get('username') + '">' + item.reporter.get('username') + '</a>, imported from: <a href="' + self.jiraBaseUrl + '/browse/' + item.key.text + '" target="_blank">' + item.title.text[item.title.text.index("]") + 2:len(item.title.text)] + '</a></i></summary>'
+        body = body + '\n\n---\n<details><summary><i>Originally reported by <a title="' + str(item.reporter or '') + '" href="' + self.jiraBaseUrl + '/secure/ViewProfile.jspa?name=' + reporter + '">' + reporter + '</a>, imported from: <a href="' + self.jiraBaseUrl + '/browse/' + item.key.text + '" target="_blank">' + title + '</a></i></summary>'
         # metadata: assignee
         body = body + '\n<i><ul>'
         if item.assignee != 'Unassigned':
-            body = body + '\n<li><b>assignee</b>: <a title="' + str(item.assignee) + '" href="' + self.jiraBaseUrl + '/secure/ViewProfile.jspa?name=' + item.assignee.get('username') + '">' + item.assignee.get('username') + '</a>'
+            body = body + '\n<li><b>assignee</b>: <a title="' + assignee + '" href="' + self.jiraBaseUrl + '/secure/ViewProfile.jspa?name=' + assignee_user + '">' + assignee_user + '</a>'
         try:
             body = body + '\n<li><b>status</b>: ' + item.status
         except AttributeError:

@@ -172,6 +172,12 @@ class Importer:
         """
         print('Issue ', issue['key'])
         print('Labels', issue['labels'])
+        
+        labels = issue['labels']
+        for i in range(len(labels)):
+            if labels[i] is None:
+                labels[i] = "Unknown"
+        
         jira_key = issue['key']
         del issue['key']
 
